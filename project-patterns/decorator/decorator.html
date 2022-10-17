@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script>
+      
+      function User(name, addr){
+        this.name = name;
+        this.addr = addr;
+      }
+
+      let user = new User("ola","krk");
+
+      function decorateUserEmployee(user, data){
+        user.company = data.company || "Default Ltd";
+        user.salary = data.salary || 5000;
+        user.tasks = [];
+        user.addTask = function(task){
+            this.tasks.push(task);
+        }
+        user.listTasks = function(){
+            this.tasks.forEach(element => console.log(element.title));
+        }
+        return user;
+      }
+       
+      let data = { company: " Some Company Ltd"};
+      let employee = decorateUserEmployee(user,data);
+
+      console.log(employee);
+
+      employee.addTask( {title:"Zadanie 1"} );
+      employee.addTask( {title:"Zadanie 2"} );
+      employee.addTask( {title:"Zadanie 3"} );
+      employee.listTasks();
+
+      //laptop
+
+      function LaptopConfig(){
+        this.cost = function(){
+            return 2000;
+        }
+        this.screen = function(){
+            return 15;
+        }
+        this.info = function(){
+            console.log("cost: " + this.cost() + " screenSize: " + this.screen() );
+        }
+      }
+ 
+      //dekorator 1
+      function increaseScreenSize(comp){
+        let basicCost = comp.cost();
+        let basicScreen = comp.screen();
+       
+        
+        if(basicScreen<=16){
+        comp.screen = function(){
+            return basicScreen + 1;
+        }
+        comp.cost = function(){
+            return basicCost + 300;
+        }
+      }
+    }
+    //dekorator 2
+    function increaseRam(comp){
+        let basicCost = comp.cost();
+        comp.cost = function(){
+            return basicCost + 500;
+        }
+    }
+    //dekorator 3
+    function addInsurance(comp){
+        let basicCost = comp.cost();
+        comp.cost = function(){
+            return basicCost + (basicCost * 0.1);
+        }
+    }
+
+      let laptop = new LaptopConfig();
+      
+      laptop.info();
+      increaseScreenSize(laptop);
+      laptop.info();
+      addInsurance(laptop);
+      laptop.info();
+      increaseRam(laptop);
+      laptop.info();
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
+

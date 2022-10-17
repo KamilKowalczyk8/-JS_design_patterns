@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+ 
+
+    <script>
+// stary interfejs
+        function Transport(credentials){
+            this.credentials = credentials;
+            this.send = function(addr, weight){
+                //logika
+                return 120;
+            }
+        }
+
+        let addr = {country: "uk"};
+        let credentials = {token: "user:123456"};
+        let oldTransport = new Transport(credentials);
+        let oldPrice = oldTransport.send(addr, 10);
+        console.log("stara cena "+oldPrice);
+
+        function NewTransport(){
+            return{
+                login:function(credentials){},
+                setPriority: function(priority){},
+                setDestination: function(addr){},
+                getPrice: function(){
+                    return 110;
+                }
+            }
+        }
+
+        function TransportAdapter(credentials){
+            let shipping =  NewTransport();
+            shipping.login(credentials);
+
+            return{
+                send: function(addr, weight){
+                    shipping.setPriority("normal");
+                    shipping.setDestination(addr);
+                    return shipping.getPrice(weight);
+                }
+            }
+        }
+        let cheaperTransport = TransportAdapter(credentials);
+        let newPrice = cheaperTransport.send(addr,10);
+        console.log("nowa cena: "+ newPrice);
+    </script>
+</head>
+
+<body>
+    
+</body>
+</html>
+

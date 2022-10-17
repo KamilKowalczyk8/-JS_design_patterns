@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script>
+
+function Flyweight(brand, cpu, ram){
+    this.brand = brand;
+    this.cpu = cpu;
+    this.ram = ram;
+}
+
+function Computer(brand, cpu, ram, cpuSpeed, modelId){
+    this.flyweight = FlyweightFactory.get(brand, cpu, ram);
+    this.cpuSpeed = cpuSpeed;
+    this.modelId = modelId;
+}
+
+const FlyweightFactory = (function(){
+    let flyweights = {};
+
+    return{
+        get: function(brand, cpu ,ram){
+            let propName = brand+"_"+cpu+"_"+ram;
+            if(!flyweights[propName]){
+                flyweights[propName] = new Flyweight(brand, cpu ,ram);
+            }
+            return flyweights[propName];
+        },
+        count:function(){
+            let count=0;
+            for(let el in flyweights) count++;
+            return count;
+        },
+        getFlyweights: function(){
+            return flyweights;
+        }
+    };
+})();
+
+let arr = [];
+arr.push(new Computer("Dell","Intel",3000,"16gb","sdfadfsa") );
+arr.push(new Computer("Dell","Intel",3000,"16gb","sdfadfsa") );
+arr.push(new Computer("Dell","Intel",3000,"16gb","sdfadfsa") );
+arr.push(new Computer("Dell","amd",3000,"76gb","sdfadfsa") );
+arr.push(new Computer("Dell","Iamd",3000,"16gb","sdfadfsa") );
+arr.push(new Computer("Dell","Intel",2400,"16gb","sddsadsafadfsa") );
+arr.push(new Computer("Dell","amd",2400,"16gb","sdfadfsa") );
+
+console.log("ilosc komputerów " + arr.length);
+console.log("ilosc pyłkow " + FlyweightFactory.count());
+let result = FlyweightFactory.count();
+let result1 = arr.length - result;
+console.log("zaoszczedzone miejsce "+ result1 );
+
+
+    </script>
+</head>
+<body>
+    <div id="wynik"></div>
+</body>
+</html>
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'> 
+
+    <script>
+
+function Task(name,description, isDone){
+    this.name = name;
+    this.decription = description;
+    this.isDone = isDone;
+}
+
+function TaskBuilder(){
+    let name,description,isDone;
+
+    return{
+        setName: function(newName){
+            name = newName;
+            return this;
+        },
+        setDescription: function(newDescription){
+            description = newDescription;
+            return this;
+        },
+        setDone: function(newDone){
+            isDone = newDone;
+            return this;
+        },
+        build: function(){
+            return new Task(name,description,isDone);
+        }
+    }
+}
+const tb = TaskBuilder();
+let builder = tb.setName("zadanie 1");
+tb.setDescription("opis");
+tb.setDone(true);
+let task = tb.build();
+console.log(task);
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
+
